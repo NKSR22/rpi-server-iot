@@ -38,3 +38,9 @@
 
 - หากต้องการใช้งานใน production ควรเพิ่ม MQTT authentication และระบบ reverse proxy
 - หากต้องการแยกภาระงานในอนาคต สามารถย้าย InfluxDB หรือ Grafana ไปอีกเครื่องได้
+---
+
+Copyright (c) 2026 Mr. Nakarin Sripanya  
+Department of Electrical Engineering  
+Faculty of Industry and Technology  
+Rajamangala University of Technology Isan, Sakon Nakhon Campus

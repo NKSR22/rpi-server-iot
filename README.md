@@ -15,8 +15,19 @@
 
 - รับส่งข้อความจากอุปกรณ์ IoT ผ่าน MQTT
 - ประมวลผลข้อมูลและสร้าง flow ผ่าน Node-RED
+- เก็บข้อมูล time-series ใน InfluxDB
 - แสดงผล dashboard ผ่าน Grafana
 - จัดเก็บ config และ data ไว้เป็นระเบียบในโฟลเดอร์เดียว
+
+## วิเคราะห์ความเหมาะสมของ Raspberry Pi 5 และ RAM
+
+สาหรับ stack `Mosquitto + Node-RED + InfluxDB + Grafana`
+
+- Raspberry Pi 5 RAM 4 GB ใช้งานได้จริงสาหรับระบบ local IoT ขนาดเล็กถึงกลาง
+- ถ้ามี dashboard หลายหน้า, query ข้อมูลย้อนหลังบ่อย, หรือมี flow หนัก แนะนา RAM 8 GB
+- Mosquitto ใช้ RAM น้อยที่สุดในระบบ
+- InfluxDB และ Grafana เป็นส่วนที่ใช้ RAM และ storage มากที่สุด
+- ถ้าเก็บข้อมูลนานหรือเขียนข้อมูลถี่ ควรใช้ SSD มากกว่า microSD
 
 ## โครงสร้างโฟลเดอร์
 
@@ -27,50 +38,44 @@ rpi-server-iot/
 |- .gitignore
 |- README.md
 |- docs/
+|  |- README.md
 |  |- ARCHITECTURE.md
 |  |- DEPLOYMENT.md
 |  |- INSTALL_RPI_OS_TERMINAL.md
-|  `- OPERATIONS.md
+|  |- OPERATIONS.md
+|  |- THEORY_IOT_SYSTEM.md
+|  |- THEORY_MQTT.md
+|  `- THEORY_NODE_RED.md
 |- scripts/
+|  |- install-base-tools.sh
 |  |- install-docker.sh
+|  |- verify-system-tools.sh
 |  |- start.sh
 |  |- stop.sh
 |  `- backup.sh
 `- docker/
    |- mosquitto/
-   |  |- config/
-   |  |  `- mosquitto.conf
-   |  |- data/
-   |  `- log/
    |- nodered/
-   |  `- data/
    |- influxdb/
-   |  |- config/
-   |  `- data/
    `- grafana/
-      |- data/
-      `- provisioning/
-         |- dashboards/
-         `- datasources/
 ```
 
 ## หน้าที่ของแต่ละส่วน
 
 - `compose.yaml` ใช้กาหนด service ทั้งหมดของระบบ
 - `.env.example` เป็นไฟล์ตัวอย่างสาหรับตั้งค่าพอร์ตและข้อมูลเริ่มต้น
-- `docker/mosquitto/config/mosquitto.conf` เป็นไฟล์ config ของ MQTT broker
-- `docker/nodered/data/` ใช้เก็บ flow และข้อมูลถาวรของ Node-RED
-- `docker/influxdb/data/` ใช้เก็บข้อมูล time-series ของ InfluxDB
-- `docker/grafana/data/` ใช้เก็บข้อมูลถาวรของ Grafana
-- `scripts/` ใช้เก็บ script ช่วยติดตั้งและจัดการระบบ
-- `docs/` ใช้เก็บคู่มือแบบละเอียด
+- `scripts/install-base-tools.sh` ติดตั้งเครื่องมือพื้นฐานรวม `nvim`
+- `scripts/verify-system-tools.sh` ตรวจว่าเครื่องมือสาคัญพร้อมใช้งานจริง
+- `docker/` ใช้เก็บข้อมูลถาวรของแต่ละ service
+- `docs/` ใช้เก็บคู่มือแบบละเอียดและเนื้อหาทฤษฎี
 
 ## คู่มือที่ควรอ่านตามลำดับ
 
-1. [การติดตั้ง Raspberry Pi OS แบบ Terminal](/c:/DEV/rpi_server_iot/docs/INSTALL_RPI_OS_TERMINAL.md)
-2. [คู่มือ Deployment](/c:/DEV/rpi_server_iot/docs/DEPLOYMENT.md)
-3. [การดูแลและใช้งานระบบ](/c:/DEV/rpi_server_iot/docs/OPERATIONS.md)
-4. [สถาปัตยกรรมระบบ](/c:/DEV/rpi_server_iot/docs/ARCHITECTURE.md)
+1. [docs/INSTALL_RPI_OS_TERMINAL.md](/c:/DEV/rpi_server_iot/docs/INSTALL_RPI_OS_TERMINAL.md)
+2. [docs/DEPLOYMENT.md](/c:/DEV/rpi_server_iot/docs/DEPLOYMENT.md)
+3. [docs/OPERATIONS.md](/c:/DEV/rpi_server_iot/docs/OPERATIONS.md)
+4. [docs/ARCHITECTURE.md](/c:/DEV/rpi_server_iot/docs/ARCHITECTURE.md)
+5. [docs/README.md](/c:/DEV/rpi_server_iot/docs/README.md)
 
 ## วิธี clone โปรเจกต์จาก GitHub
 
@@ -90,11 +95,12 @@ sudo apt install -y git
 
 ## ขั้นตอนติดตั้งแบบย่อ
 
-### 1. สร้างไฟล์ `.env`
+### 1. ติดตั้งเครื่องมือพื้นฐานให้ครบ
 
 ```bash
-cp .env.example .env
-nano .env
+chmod +x scripts/install-base-tools.sh
+./scripts/install-base-tools.sh
+./scripts/verify-system-tools.sh
 ```
 
 ### 2. ติดตั้ง Docker
@@ -104,16 +110,21 @@ chmod +x scripts/install-docker.sh
 ./scripts/install-docker.sh
 ```
 
-หลังติดตั้งเสร็จ ให้ logout แล้ว login ใหม่
+### 3. สร้างไฟล์ `.env`
 
-### 3. เริ่มระบบ
+```bash
+cp .env.example .env
+nvim .env
+```
+
+### 4. เริ่มระบบ
 
 ```bash
 chmod +x scripts/start.sh
 ./scripts/start.sh
 ```
 
-### 4. ตรวจสอบสถานะ
+### 5. ตรวจสอบสถานะ
 
 ```bash
 docker compose ps
@@ -146,55 +157,12 @@ INFLUXDB_ADMIN_TOKEN=change-this-influxdb-token
 - InfluxDB: `http://IP-ADDRESS-OF-PI:8086`
 - Grafana: `http://IP-ADDRESS-OF-PI:3000`
 
-ตัวอย่างเช่น ถ้า Raspberry Pi มี IP เป็น `192.168.1.50`
-
-- `mqtt://192.168.1.50:1883`
-- `http://192.168.1.50:1880`
-- `http://192.168.1.50:8086`
-- `http://192.168.1.50:3000`
-
-## คาสั่งสาคัญที่ใช้บ่อย
-
-เริ่มระบบ
-
-```bash
-docker compose up -d
-```
-
-หยุดระบบ
-
-```bash
-docker compose down
-```
-
-ดูสถานะ
-
-```bash
-docker compose ps
-```
-
-ดู log
-
-```bash
-docker compose logs -f
-```
-
-ดู log แยกตาม service
-
-```bash
-docker compose logs -f mosquitto
-docker compose logs -f nodered
-docker compose logs -f influxdb
-docker compose logs -f grafana
-```
-
 ## ข้อแนะนาเพิ่มเติม
 
-- ควรเปลี่ยนรหัสผ่าน Grafana หลังเข้าใช้งานครั้งแรก
-- ในงานจริงควรเพิ่มระบบยืนยันตัวตนของ MQTT
+- ควรเปลี่ยนรหัสผ่าน Grafana และ InfluxDB หลังติดตั้งครั้งแรก
+- ถ้าใช้ RAM 4 GB ควรติดตามการใช้หน่วยความจาในช่วงแรกของการใช้งาน
+- ถ้าข้อมูล sensor ถูกเขียนถี่มาก ควรพิจารณา SSD แทน microSD
 - ควรสารองข้อมูลในโฟลเดอร์ `docker/` เป็นประจา
-- ให้ใช้ InfluxDB เป็น data source หลักสาหรับ Grafana ในงาน sensor และ telemetry
-- จาก Node-RED สามารถเขียนข้อมูลลง bucket ของ InfluxDB ได้โดยตรง
 
 ## Copyright
 

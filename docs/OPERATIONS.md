@@ -26,7 +26,29 @@ docker compose down
 ./scripts/stop.sh
 ```
 
-## การตรวจสอบสถานะ
+## การตรวจสอบสถานะระบบปฏิบัติการ
+
+ตรวจสอบการใช้ RAM, CPU และ load
+
+```bash
+free -h
+htop
+```
+
+ตรวจสอบ disk
+
+```bash
+df -h
+```
+
+ตรวจสอบ service และ port
+
+```bash
+ss -tulpn
+lsof -i -P -n
+```
+
+## การตรวจสอบสถานะ container
 
 ```bash
 docker compose ps
@@ -43,12 +65,6 @@ docker compose logs -f grafana
 ```
 
 ## การทดสอบ MQTT เบื้องต้น
-
-ติดตั้ง MQTT client
-
-```bash
-sudo apt install -y mosquitto-clients
-```
 
 subscribe
 
@@ -69,6 +85,20 @@ mosquitto_pub -h localhost -p 1883 -t test/topic -m "hello"
 - ใน Grafana ให้เพิ่ม data source ประเภท `InfluxDB`
 - ใน Node-RED สามารถใช้ node ของ InfluxDB เพื่อเขียนข้อมูล sensor ลง bucket ได้
 
+## การใช้งาน Neovim ในเครื่อง server
+
+เปิดแก้ไฟล์ `.env`
+
+```bash
+nvim .env
+```
+
+เปิดแก้ compose
+
+```bash
+nvim compose.yaml
+```
+
 ## การสารองข้อมูล
 
 ```bash
@@ -82,9 +112,26 @@ docker compose pull
 docker compose up -d
 ```
 
+## การตรวจสอบว่าเครื่องมือพร้อมใช้งาน
+
+```bash
+./scripts/verify-system-tools.sh
+```
+
+ถ้าพบ `[MISSING]` ให้ติดตั้งเครื่องมือชุดพื้นฐานใหม่อีกครั้ง
+
 ## แนวทางแก้ปัญหาเบื้องต้น
 
 1. ตรวจสอบไฟล์ `.env`
 2. ตรวจสอบ port ที่ใช้งาน
 3. ตรวจสอบ log ของ service
 4. ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตตอนดึง image ครั้งแรก
+5. ตรวจสอบ RAM และพื้นที่เก็บข้อมูลเมื่อระบบเริ่มช้า
+6. ตรวจสอบว่า InfluxDB ไม่กินพื้นที่จนเต็ม disk
+
+---
+
+Copyright (c) 2026 Mr. Nakarin Sripanya  
+Department of Electrical Engineering  
+Faculty of Industry and Technology  
+Rajamangala University of Technology Isan, Sakon Nakhon Campus
