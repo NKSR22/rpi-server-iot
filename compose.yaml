@@ -19,6 +19,7 @@ services:
     restart: unless-stopped
     depends_on:
       - mosquitto
+      - influxdb
     ports:
       - "${NODE_RED_PORT}:1880"
     environment:
@@ -28,10 +29,32 @@ services:
     networks:
       - iot_net
 
+  influxdb:
+    image: influxdb:2
+    container_name: influxdb
+    restart: unless-stopped
+    ports:
+      - "${INFLUXDB_PORT}:8086"
+    environment:
+      - TZ=${TZ}
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_ADMIN_TOKEN}
+    volumes:
+      - ./docker/influxdb/data:/var/lib/influxdb2
+      - ./docker/influxdb/config:/etc/influxdb2
+    networks:
+      - iot_net
+
   grafana:
     image: grafana/grafana-oss:latest
     container_name: grafana
     restart: unless-stopped
+    depends_on:
+      - influxdb
     ports:
       - "${GRAFANA_PORT}:3000"
     environment:

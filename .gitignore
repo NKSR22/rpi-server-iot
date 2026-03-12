@@ -14,3 +14,9 @@ docker/nodered/data/*
 
 docker/grafana/data/*
 !docker/grafana/data/.gitkeep
+
+docker/influxdb/data/*
+!docker/influxdb/data/.gitkeep
+
+docker/influxdb/config/*
+!docker/influxdb/config/.gitkeep

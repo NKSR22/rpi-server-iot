@@ -1,9 +1,10 @@
 ﻿# rpi-server-iot
 
-คู่มือภาษาไทยสาหรับสร้าง Local IoT Server บน Raspberry Pi 5 โดยใช้ Docker Compose เพื่อรันบริการหลักดังนี้
+คู่มือสาหรับสร้าง Local IoT Server บน Raspberry Pi 5 โดยใช้ Docker Compose เพื่อรันบริการหลักดังนี้
 
 - MQTT Broker ด้วย Eclipse Mosquitto
 - Node-RED สาหรับ automation และ data flow
+- InfluxDB สาหรับเก็บข้อมูล time-series
 - Grafana สาหรับ dashboard
 
 เหมาะสาหรับงานระบบ IoT ภายในบ้าน ห้องทดลอง โรงงานขนาดเล็ก หรือระบบที่ต้องการรันภายในเครือข่าย local
@@ -43,6 +44,9 @@ rpi-server-iot/
    |  `- log/
    |- nodered/
    |  `- data/
+   |- influxdb/
+   |  |- config/
+   |  `- data/
    `- grafana/
       |- data/
       `- provisioning/
@@ -56,6 +60,7 @@ rpi-server-iot/
 - `.env.example` เป็นไฟล์ตัวอย่างสาหรับตั้งค่าพอร์ตและข้อมูลเริ่มต้น
 - `docker/mosquitto/config/mosquitto.conf` เป็นไฟล์ config ของ MQTT broker
 - `docker/nodered/data/` ใช้เก็บ flow และข้อมูลถาวรของ Node-RED
+- `docker/influxdb/data/` ใช้เก็บข้อมูล time-series ของ InfluxDB
 - `docker/grafana/data/` ใช้เก็บข้อมูลถาวรของ Grafana
 - `scripts/` ใช้เก็บ script ช่วยติดตั้งและจัดการระบบ
 - `docs/` ใช้เก็บคู่มือแบบละเอียด
@@ -123,8 +128,14 @@ MQTT_PORT=1883
 MQTT_WS_PORT=9001
 NODE_RED_PORT=1880
 GRAFANA_PORT=3000
+INFLUXDB_PORT=8086
 GRAFANA_ADMIN_USER=admin
 GRAFANA_ADMIN_PASSWORD=admin123
+INFLUXDB_USERNAME=admin
+INFLUXDB_PASSWORD=admin12345
+INFLUXDB_ORG=local-iot
+INFLUXDB_BUCKET=sensor-data
+INFLUXDB_ADMIN_TOKEN=change-this-influxdb-token
 ```
 
 ## ช่องทางเข้าใช้งานหลังติดตั้ง
@@ -132,12 +143,14 @@ GRAFANA_ADMIN_PASSWORD=admin123
 - MQTT Broker: `mqtt://IP-ADDRESS-OF-PI:1883`
 - MQTT WebSocket: `ws://IP-ADDRESS-OF-PI:9001`
 - Node-RED: `http://IP-ADDRESS-OF-PI:1880`
+- InfluxDB: `http://IP-ADDRESS-OF-PI:8086`
 - Grafana: `http://IP-ADDRESS-OF-PI:3000`
 
 ตัวอย่างเช่น ถ้า Raspberry Pi มี IP เป็น `192.168.1.50`
 
 - `mqtt://192.168.1.50:1883`
 - `http://192.168.1.50:1880`
+- `http://192.168.1.50:8086`
 - `http://192.168.1.50:3000`
 
 ## คาสั่งสาคัญที่ใช้บ่อย
@@ -171,6 +184,7 @@ docker compose logs -f
 ```bash
 docker compose logs -f mosquitto
 docker compose logs -f nodered
+docker compose logs -f influxdb
 docker compose logs -f grafana
 ```
 
@@ -179,8 +193,12 @@ docker compose logs -f grafana
 - ควรเปลี่ยนรหัสผ่าน Grafana หลังเข้าใช้งานครั้งแรก
 - ในงานจริงควรเพิ่มระบบยืนยันตัวตนของ MQTT
 - ควรสารองข้อมูลในโฟลเดอร์ `docker/` เป็นประจา
-- ถ้าต้องการ dashboard เชิงวิเคราะห์อย่างจริงจัง ควรเพิ่มฐานข้อมูล time-series เช่น InfluxDB ในขั้นถัดไป
+- ให้ใช้ InfluxDB เป็น data source หลักสาหรับ Grafana ในงาน sensor และ telemetry
+- จาก Node-RED สามารถเขียนข้อมูลลง bucket ของ InfluxDB ได้โดยตรง
 
-## ผู้พัฒนา
+## Copyright
 
-ผู้พัฒนา NAKARIN SRIPANYA
+Copyright (c) 2026 Mr. Nakarin Sripanya  
+Department of Electrical Engineering  
+Faculty of Industry and Technology  
+Rajamangala University of Technology Isan, Sakon Nakhon Campus

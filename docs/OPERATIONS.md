@@ -38,6 +38,7 @@ docker compose logs -f
 ```bash
 docker compose logs -f mosquitto
 docker compose logs -f nodered
+docker compose logs -f influxdb
 docker compose logs -f grafana
 ```
 
@@ -60,6 +61,13 @@ publish
 ```bash
 mosquitto_pub -h localhost -p 1883 -t test/topic -m "hello"
 ```
+
+## การใช้งาน InfluxDB เบื้องต้น
+
+- URL เริ่มต้นคือ `http://IP-ADDRESS-OF-PI:8086`
+- ค่า `org`, `bucket`, `username` และ `token` ดูได้จากไฟล์ `.env`
+- ใน Grafana ให้เพิ่ม data source ประเภท `InfluxDB`
+- ใน Node-RED สามารถใช้ node ของ InfluxDB เพื่อเขียนข้อมูล sensor ลง bucket ได้
 
 ## การสารองข้อมูล
 

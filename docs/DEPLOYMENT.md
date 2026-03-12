@@ -16,7 +16,7 @@
 6. clone โปรเจกต์จาก GitHub
 7. สร้างไฟล์ `.env`
 8. เริ่มระบบด้วย Docker Compose
-9. ทดสอบ Node-RED, MQTT และ Grafana
+9. ทดสอบ Node-RED, MQTT, InfluxDB และ Grafana
 
 ## ขั้นตอนที่ 1 อัปเดตระบบ
 
@@ -62,6 +62,15 @@ cp .env.example .env
 nano .env
 ```
 
+ค่าที่ควรตรวจสอบเพิ่มเติมสาหรับ InfluxDB
+
+- `INFLUXDB_PORT=8086`
+- `INFLUXDB_USERNAME=admin`
+- `INFLUXDB_PASSWORD=admin12345`
+- `INFLUXDB_ORG=local-iot`
+- `INFLUXDB_BUCKET=sensor-data`
+- `INFLUXDB_ADMIN_TOKEN=change-this-influxdb-token`
+
 ## ขั้นตอนที่ 6 เริ่มระบบ
 
 ```bash
@@ -91,6 +100,7 @@ hostname -I
 สมมติได้ IP เป็น `192.168.1.50`
 
 - Node-RED: `http://192.168.1.50:1880`
+- InfluxDB: `http://192.168.1.50:8086`
 - Grafana: `http://192.168.1.50:3000`
 - MQTT: `192.168.1.50:1883`
 
@@ -119,4 +129,6 @@ chmod +x scripts/backup.sh
 - `docker/mosquitto/data/`
 - `docker/mosquitto/log/`
 - `docker/nodered/data/`
+- `docker/influxdb/data/`
+- `docker/influxdb/config/`
 - `docker/grafana/data/`
