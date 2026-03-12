@@ -1,0 +1,16 @@
+.env
+*.log
+*.tmp
+*.bak
+
+docker/mosquitto/data/*
+!docker/mosquitto/data/.gitkeep
+
+docker/mosquitto/log/*
+!docker/mosquitto/log/.gitkeep
+
+docker/nodered/data/*
+!docker/nodered/data/.gitkeep
+
+docker/grafana/data/*
+!docker/grafana/data/.gitkeep
