@@ -129,6 +129,47 @@ cd ~/rpi-server-iot
 
 ถ้าพบ `[MISSING]` ให้ติดตั้งเครื่องมือชุดพื้นฐานใหม่อีกครั้ง
 
+## แนวทางตรวจ Grafana เมื่อ container รันแต่หน้าเว็บเข้าไม่ได้
+
+เช็กก่อนว่า port ถูกเปิดจริงบนเครื่อง host
+
+```bash
+ss -tulpn | grep 3000
+docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
+```
+
+ดู log ของ Grafana โดยตรง
+
+```bash
+cd ~/rpi-server-iot
+docker compose logs --tail=200 grafana
+```
+
+ตรวจสิทธิ์ของโฟลเดอร์ข้อมูล Grafana
+
+```bash
+cd ~/rpi-server-iot
+ls -ld docker/grafana/data
+ls -l docker/grafana/data
+```
+
+ถ้า log มีลักษณะใกล้เคียง `permission denied`, `database is locked`, `failed to open sqlite database` หรือ browser ขึ้น `This site can't be reached` ทั้งที่ container รันอยู่ ให้เตรียมสิทธิ์ใหม่แล้วเริ่มระบบอีกครั้ง
+
+```bash
+cd ~/rpi-server-iot
+chmod +x scripts/prepare-data-dirs.sh
+./scripts/prepare-data-dirs.sh
+docker compose restart grafana
+```
+
+ถ้ายังเข้าไม่ได้ ให้ตรวจเพิ่มว่า firewall ของเครื่องปลายทางไม่ได้บล็อก port `3000`
+
+```bash
+sudo ufw status
+curl -I http://127.0.0.1:3000
+curl -I http://$(hostname -I | awk '{print $1}'):3000
+```
+
 ## แนวทางแก้ปัญหาเบื้องต้น
 
 1. ตรวจสอบไฟล์ `.env`

@@ -49,6 +49,7 @@ rpi-server-iot/
 |- scripts/
 |  |- install-base-tools.sh
 |  |- install-docker.sh
+|  |- prepare-data-dirs.sh
 |  |- verify-system-tools.sh
 |  |- start.sh
 |  |- stop.sh
