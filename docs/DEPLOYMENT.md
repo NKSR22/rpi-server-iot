@@ -20,7 +20,7 @@
 9. ติดตั้ง Docker Engine และ Docker Compose plugin
 10. เริ่มระบบด้วย Docker Compose
 11. ทดสอบ Node-RED, MQTT, InfluxDB และ Grafana
-12. ตรวจสอบ log และ backup strategy
+12. ตรวจสอบ log และแนวทางสำรองข้อมูล
 
 ## ขั้นตอนที่ 1 อัปเดตระบบ
 

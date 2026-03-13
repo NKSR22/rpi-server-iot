@@ -4,6 +4,17 @@
 
 Grafana เป็นเครื่องมือสำหรับแสดงผลข้อมูลในรูปแบบ dashboard โดยสามารถเชื่อมต่อกับแหล่งข้อมูลหลายประเภท เช่น InfluxDB, Prometheus, PostgreSQL และอื่น ๆ
 
+## รูปประกอบบทบาทของ Grafana
+
+```mermaid
+flowchart LR
+  I[InfluxDB] --> G[Grafana]
+  G --> P1[Panel]
+  G --> P2[Alert]
+  G --> P3[Dashboard]
+  P3 --> U[User]
+```
+
 ## บทบาทของ Grafana ในระบบ IoT
 
 ในระบบ IoT Grafana ใช้เพื่อ
@@ -17,8 +28,19 @@ Grafana เป็นเครื่องมือสำหรับแสดง
 
 - panel ใช้แสดงข้อมูลแต่ละชุด
 - query ใช้ดึงข้อมูลจาก data source
-- variable ใช้ทา dashboard แบบเลือก device หรือช่วงเวลาได้
+- variable ใช้ทำ dashboard แบบเลือก device หรือช่วงเวลาได้
 - alert ใช้แจ้งเตือนเมื่อข้อมูลเกิน threshold
+
+## รูปประกอบองค์ประกอบของ dashboard
+
+```mermaid
+flowchart TD
+  D[Dashboard]
+  D --> Q[Query]
+  D --> V[Variable]
+  D --> P[Panels]
+  D --> A[Alerts]
+```
 
 ## หลักคิดการออกแบบ dashboard ที่ดี
 
@@ -37,7 +59,7 @@ Grafana จะ query ข้อมูลจาก InfluxDB แล้วแสด�
 ## ข้อควรระวัง
 
 - query ที่กว้างเกินไปจะใช้ RAM และ CPU เพิ่มขึ้น
-- dashboard ที่มี panel มากอาจทาให้ Pi ตอบสนองช้าลง
+- dashboard ที่มี panel มากอาจทำให้ Pi ตอบสนองช้าลง
 - ควรใช้ retention และ downsampling ร่วมกันในระบบที่เก็บข้อมูลนาน
 
 ---

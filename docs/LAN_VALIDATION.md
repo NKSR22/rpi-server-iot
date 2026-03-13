@@ -12,8 +12,8 @@
 
 ตัวอย่างที่ถูกต้อง
 
-- เปิด Grafana จากคอมอีกเครื่อง: `http://IP-ADDRESS-OF-PI:3000`
-- เรียก InfluxDB health จากคอมอีกเครื่อง: `http://IP-ADDRESS-OF-PI:8086/health`
+- เปิด Grafana จากคอมพิวเตอร์อีกเครื่องหนึ่ง: `http://IP-ADDRESS-OF-PI:3000`
+- เรียก InfluxDB health จากคอมพิวเตอร์อีกเครื่องหนึ่ง: `http://IP-ADDRESS-OF-PI:8086/health`
 - ตั้งค่า MQTT broker ใน Node-RED: `mosquitto:1883`
 - ตั้งค่า InfluxDB data source ใน Grafana: `http://influxdb:8086`
 

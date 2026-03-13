@@ -2,11 +2,11 @@
 
 ## Node-RED คืออะไร
 
-Node-RED เป็นเครื่องมือแบบ flow-based programming ใช้เชื่อมโยงอุปกรณ์ บริการ และตรรกะต่าง ๆ ผ่านหน้าเว็บ โดยเหมาะมากกับงาน IoT, integration และ automation
+Node-RED เป็นเครื่องมือแบบการพัฒนาเชิงโฟลว์ หรือ flow-based programming ใช้เชื่อมโยงอุปกรณ์ บริการ และตรรกะต่าง ๆ ผ่านหน้าเว็บ โดยเหมาะมากกับงาน IoT, integration และ automation
 
 ## หลักการทำงาน
 
-Node-RED ใช้แนวคิดว่า data จะไหลผ่าน node แต่ละตัวตามลาดับที่ออกแบบไว้ใน flow
+Node-RED ใช้แนวคิดว่า data จะไหลผ่าน node แต่ละตัวตามลำดับที่ออกแบบไว้ใน flow
 
 ตัวอย่าง node ที่ใช้บ่อย
 
@@ -14,6 +14,15 @@ Node-RED ใช้แนวคิดว่า data จะไหลผ่าน n
 - function node ใช้เขียน JavaScript เพื่อแปลงข้อมูล
 - switch node ใช้ตัดสินใจตามเงื่อนไข
 - output node ส่งข้อมูลออกไปยัง MQTT, database, API หรือ dashboard
+
+## รูปประกอบ flow พื้นฐาน
+
+```mermaid
+flowchart LR
+  I[Inject] --> F[Function]
+  F --> D[Debug]
+  F --> M[MQTT Out]
+```
 
 ## ข้อดีของ Node-RED
 
@@ -36,6 +45,15 @@ Node-RED ใช้แนวคิดว่า data จะไหลผ่าน n
 - แปลงข้อมูลให้อยู่ในรูปแบบที่เก็บลง InfluxDB ได้
 - ตั้งเงื่อนไขแจ้งเตือน
 - ส่งต่อข้อมูลไปยังระบบอื่น
+
+## รูปประกอบบทบาทของ Node-RED ในระบบนี้
+
+```mermaid
+flowchart LR
+  M[MQTT Broker] --> N[Node-RED]
+  N --> I[InfluxDB]
+  N --> A[Alert / External API]
+```
 
 ## หลักการออกแบบ flow ที่ดี
 

@@ -12,6 +12,18 @@ IoT หรือ Internet of Things คือระบบที่อุปก�
 4. ระบบจัดเก็บข้อมูล เช่น InfluxDB
 5. ระบบแสดงผลและวิเคราะห์ เช่น Grafana
 
+## รูปประกอบภาพรวมระบบ IoT
+
+```mermaid
+flowchart LR
+  A[Sensor / Device] --> B[Network]
+  B --> C[MQTT Broker]
+  C --> D[Node-RED]
+  D --> E[InfluxDB]
+  E --> F[Grafana]
+  F --> G[User / Operator]
+```
+
 ## เหตุผลที่ใช้ Local IoT Server
 
 - ลดการพึ่งพา cloud ในระบบที่ต้องการทำงานภายในองค์กร
@@ -43,6 +55,23 @@ IoT หรือ Internet of Things คือระบบที่อุปก�
 
 ```text
 Temperature Sensor -> MQTT Topic -> Node-RED -> InfluxDB -> Grafana Dashboard
+```
+
+## รูปประกอบการไหลของข้อมูลในโครงการนี้
+
+```mermaid
+sequenceDiagram
+  participant S as Sensor
+  participant M as Mosquitto
+  participant N as Node-RED
+  participant I as InfluxDB
+  participant G as Grafana
+
+  S->>M: Publish telemetry
+  M->>N: Forward subscribed topic
+  N->>I: Write time-series data
+  G->>I: Query dashboard data
+  I-->>G: Return query result
 ```
 
 ## ประโยชน์ของการแยก service

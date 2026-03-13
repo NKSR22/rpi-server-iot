@@ -4,16 +4,28 @@
 
 InfluxDB เป็นฐานข้อมูลแบบ time-series database ที่ออกแบบมาสำหรับข้อมูลที่มีเวลาเป็นแกนหลัก เช่น ค่าจาก sensor, telemetry, event log และค่าทางอุตสาหกรรมที่เกิดต่อเนื่องตามเวลา
 
+## รูปประกอบโครงสร้างข้อมูลแบบ time-series
+
+```mermaid
+flowchart TD
+  M[measurement: sensor]
+  M --> T1[tag: device=device01]
+  M --> T2[tag: room=laboratory]
+  M --> F1[field: temperature=28.4]
+  M --> F2[field: humidity=61.2]
+  M --> TS[timestamp]
+```
+
 ## เหตุผลที่ time-series database เหมาะกับงาน IoT
 
 ข้อมูล IoT ส่วนมากมีรูปแบบดังนี้
 
 - เกิดซ้ำตามรอบเวลา
-- มี timestamp กากับ
+- มี timestamp กำกับ
 - ต้องการดูแนวโน้มย้อนหลัง
 - ต้องการ aggregate เป็นช่วงเวลา เช่น เฉลี่ยต่อ 1 นาที หรือ 1 ชั่วโมง
 
-ฐานข้อมูลทั่วไปทาได้ แต่ time-series database จะเหมาะกว่าในแง่ประสิทธิภาพและโครงสร้างข้อมูล
+ฐานข้อมูลทั่วไปทำได้ แต่ time-series database จะเหมาะกว่าในแง่ประสิทธิภาพและโครงสร้างข้อมูล
 
 ## แนวคิดหลักของ InfluxDB 2
 
@@ -47,6 +59,15 @@ timestamp:
 - ใช้ `field` กับค่าที่เป็นตัวเลขหรือค่าที่เปลี่ยนตลอด
 - ตั้งชื่อ measurement ให้สื่อความหมาย
 - แยก bucket ตามอายุข้อมูลหรือประเภทงานถ้าจำเป็น
+
+## รูปประกอบเส้นทางข้อมูลเข้าสู่ InfluxDB
+
+```mermaid
+flowchart LR
+  S[Sensor Data] --> M[MQTT]
+  M --> N[Node-RED]
+  N --> I[InfluxDB Bucket]
+```
 
 ## Retention และการบริหาร storage
 

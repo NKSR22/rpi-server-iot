@@ -42,13 +42,16 @@ rpi-server-iot/
 |  |- ARCHITECTURE.md
 |  |- DEPLOYMENT.md
 |  |- INSTALL_RPI_OS_TERMINAL.md
+|  |- LAN_VALIDATION.md
 |  |- OPERATIONS.md
+|  |- PRODUCTION_HARDENING.md
 |  |- THEORY_IOT_SYSTEM.md
 |  |- THEORY_MQTT.md
 |  `- THEORY_NODE_RED.md
 |- scripts/
 |  |- install-base-tools.sh
 |  |- install-docker.sh
+|  |- enable-mqtt-auth.sh
 |  |- prepare-data-dirs.sh
 |  |- verify-system-tools.sh
 |  |- start.sh
@@ -89,7 +92,8 @@ rpi-server-iot/
 3. [docs/OPERATIONS.md](docs/OPERATIONS.md)
 4. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 5. [docs/LAN_VALIDATION.md](docs/LAN_VALIDATION.md)
-6. [docs/README.md](docs/README.md)
+6. [docs/PRODUCTION_HARDENING.md](docs/PRODUCTION_HARDENING.md)
+7. [docs/README.md](docs/README.md)
 
 ## วิธี clone โปรเจกต์จาก GitHub
 

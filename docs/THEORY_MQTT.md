@@ -6,13 +6,23 @@ MQTT ย่อมาจาก Message Queuing Telemetry Transport เป็น�
 
 ## แนวคิดแบบ Publish and Subscribe
 
-MQTT ใช้รูปแบบ publish-subscribe โดยมี broker เป็นตัวกลาง
+MQTT ใช้รูปแบบ Publish/Subscribe โดยมี broker เป็นตัวกลาง
 
 - publisher ส่งข้อความไปยัง topic
 - broker รับข้อความและกระจายไปยัง subscriber
 - subscriber รับเฉพาะ topic ที่ตนสนใจ
 
 ข้อดีคือ publisher และ subscriber ไม่ต้องรู้จักกันโดยตรง
+
+## รูปประกอบ Publish / Subscribe
+
+```mermaid
+flowchart LR
+  P1[Publisher A] --> B[MQTT Broker]
+  P2[Publisher B] --> B
+  B --> S1[Subscriber A]
+  B --> S2[Subscriber B]
+```
 
 ## Topic คืออะไร
 
@@ -25,6 +35,17 @@ lab/device01/status
 ```
 
 การออกแบบ topic ที่ดีช่วยให้ระบบขยายง่ายและบริหารสิทธิ์ง่ายขึ้น
+
+## รูปประกอบโครงสร้าง topic
+
+```mermaid
+flowchart TD
+  T[site1/boiler01/telemetry/temperature]
+  T --> A[site1]
+  T --> B[boiler01]
+  T --> C[telemetry]
+  T --> D[temperature]
+```
 
 ## Quality of Service
 
