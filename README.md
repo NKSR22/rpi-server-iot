@@ -76,7 +76,8 @@ rpi-server-iot/
 2. [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 3. [docs/OPERATIONS.md](docs/OPERATIONS.md)
 4. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-5. [docs/README.md](docs/README.md)
+5. [docs/LAN_VALIDATION.md](docs/LAN_VALIDATION.md)
+6. [docs/README.md](docs/README.md)
 
 ## วิธี clone โปรเจกต์จาก GitHub
 
@@ -162,6 +163,18 @@ INFLUXDB_ADMIN_TOKEN=change-this-influxdb-token
 - Node-RED: `http://IP-ADDRESS-OF-PI:1880`
 - InfluxDB: `http://IP-ADDRESS-OF-PI:8086`
 - Grafana: `http://IP-ADDRESS-OF-PI:3000`
+
+## หลักการอ้างอิง host ให้ถูกต้อง
+
+- จาก browser หรือ terminal บนเครื่องลูกข่ายในวง LAN ให้ใช้ `IP-ADDRESS-OF-PI`
+- จาก shell บน Raspberry Pi เอง ให้ใช้ `localhost`
+- จาก service ภายใน Docker Compose ให้ใช้ชื่อ service เช่น `mosquitto` และ `influxdb`
+
+ตัวอย่าง
+
+- เครื่องลูกข่ายเปิด Grafana: `http://IP-ADDRESS-OF-PI:3000`
+- Grafana data source ไป InfluxDB: `http://influxdb:8086`
+- Node-RED MQTT broker: `mosquitto:1883`
 
 ## ข้อแนะนาเพิ่มเติม
 

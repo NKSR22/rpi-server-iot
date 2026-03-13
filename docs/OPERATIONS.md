@@ -84,12 +84,16 @@ publish
 mosquitto_pub -h localhost -p 1883 -t test/topic -m "hello"
 ```
 
+ถ้าทดสอบจากคอมพิวเตอร์อีกเครื่องในวง LAN ให้ใช้ IP ของ Raspberry Pi แทน `localhost` และดูขั้นตอนแบบละเอียดใน [LAN_VALIDATION.md](LAN_VALIDATION.md)
+
 ## การใช้งาน InfluxDB เบื้องต้น
 
 - URL เริ่มต้นคือ `http://IP-ADDRESS-OF-PI:8086`
 - ค่า `org`, `bucket`, `username` และ `token` ดูได้จากไฟล์ `.env`
 - ใน Grafana ให้เพิ่ม data source ประเภท `InfluxDB`
 - ใน Node-RED สามารถใช้ node ของ InfluxDB เพื่อเขียนข้อมูล sensor ลง bucket ได้
+- เมื่อ config จาก Grafana ให้ใช้ URL `http://influxdb:8086`
+- เมื่อ config จาก Node-RED ที่รันใน container เดียวกัน ให้หลีกเลี่ยง `localhost` ถ้าหมายถึง service อื่น
 
 ## การใช้งาน Neovim ในเครื่อง server
 

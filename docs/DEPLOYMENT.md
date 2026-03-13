@@ -139,9 +139,10 @@ chmod +x scripts/start.sh
 docker compose up -d
 ```
 
-## ขั้นตอนที่ 8 ตรวจสอบสถานะ
+## ขั้นตอนที่ 9 ตรวจสอบสถานะ
 
 ```bash
+cd ~/rpi-server-iot
 docker compose ps
 docker compose logs -f
 ```
@@ -149,13 +150,14 @@ docker compose logs -f
 ดู log แยกตาม service
 
 ```bash
+cd ~/rpi-server-iot
 docker compose logs -f mosquitto
 docker compose logs -f nodered
 docker compose logs -f influxdb
 docker compose logs -f grafana
 ```
 
-## ขั้นตอนที่ 9 หา IP ของเครื่อง
+## ขั้นตอนที่ 10 หา IP ของเครื่อง
 
 ```bash
 hostname -I
@@ -168,27 +170,41 @@ hostname -I
 - Grafana: `http://192.168.1.50:3000`
 - MQTT: `192.168.1.50:1883`
 
-## ขั้นตอนที่ 10 ทดสอบระบบปลายทาง
+การใช้งานจริงจากคอมพิวเตอร์อีกเครื่องในวง LAN ให้ใช้ IP นี้ ไม่ใช้ `localhost`
 
-ทดสอบ MQTT
+## ขั้นตอนที่ 11 ทดสอบระบบจากเครื่องลูกข่ายในวง LAN
 
-```bash
-mosquitto_sub -h localhost -p 1883 -t test/topic
-```
-
-เปิดอีก terminal แล้วส่งค่า
+บนเครื่องลูกข่าย ให้ตรวจสอบเบื้องต้น
 
 ```bash
-mosquitto_pub -h localhost -p 1883 -t test/topic -m "hello"
+export PI_IP=192.168.1.50
+ping -c 4 "$PI_IP"
+curl -I "http://$PI_IP:1880"
+curl -I "http://$PI_IP:3000"
+curl "http://$PI_IP:8086/health"
 ```
 
-ทดสอบว่า InfluxDB ตอบสนอง
+ทดสอบ MQTT จากเครื่องลูกข่าย
 
 ```bash
-curl http://localhost:8086/health
+mosquitto_sub -h "$PI_IP" -p 1883 -t lan/test/topic -v
 ```
 
-## ขั้นตอนที่ 11 หยุดระบบ
+เปิดอีก terminal บนเครื่องลูกข่ายแล้วส่งค่า
+
+```bash
+mosquitto_pub -h "$PI_IP" -p 1883 -t lan/test/topic -m "hello-from-lan"
+```
+
+ทดสอบ Node-RED และ Grafana ด้วย browser จากเครื่องลูกข่าย
+
+- Node-RED: `http://192.168.1.50:1880`
+- Grafana: `http://192.168.1.50:3000`
+- InfluxDB UI: `http://192.168.1.50:8086`
+
+รายละเอียดการทดสอบแยกตาม service อยู่ใน [LAN_VALIDATION.md](LAN_VALIDATION.md)
+
+## ขั้นตอนที่ 12 หยุดระบบ
 
 ```bash
 cd ~/rpi-server-iot

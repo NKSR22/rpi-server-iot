@@ -17,6 +17,18 @@
 อุปกรณ์ IoT -> MQTT Broker -> Node-RED -> InfluxDB -> Grafana
 ```
 
+## หลักการเข้าถึง service จากแต่ละจุด
+
+- เครื่องลูกข่ายในวง LAN เข้าใช้งานผ่าน IP ของ Raspberry Pi เช่น `http://192.168.1.50:3000`
+- shell บน Raspberry Pi สามารถตรวจ service ผ่าน `localhost`
+- container ภายในระบบเดียวกันควรคุยกันผ่านชื่อ service ของ Docker Compose
+
+ตัวอย่างที่สาคัญ
+
+- Node-RED ต่อ MQTT broker ใช้ `mosquitto:1883`
+- Grafana ต่อ InfluxDB ใช้ `http://influxdb:8086`
+- เครื่องลูกข่ายเปิด Node-RED ใช้ `http://192.168.1.50:1880`
+
 ## อธิบายการทางาน
 
 1. อุปกรณ์ IoT ส่งข้อมูลเข้ามายัง MQTT topic
