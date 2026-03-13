@@ -114,9 +114,24 @@ sudo reboot
 
 เอกสารนี้ตั้งใจให้เครื่องพร้อมใช้งานจริง และลดโอกาสเจอปัญหาเรียกคาสั่งแล้วไม่มีโปรแกรม
 
-ติดตั้งเครื่องมือพื้นฐานด้วย script
+ติดตั้ง `git` ก่อนเพื่อให้ clone โปรเจกต์และเรียกใช้ script จากใน repo ได้
 
 ```bash
+sudo apt update
+sudo apt install -y git
+```
+
+clone โปรเจกต์และเข้าไปที่โฟลเดอร์งาน
+
+```bash
+git clone https://github.com/NKSR22/rpi-server-iot.git
+cd ~/rpi-server-iot
+```
+
+ติดตั้งเครื่องมือพื้นฐานด้วย script จากโฟลเดอร์โปรเจกต์
+
+```bash
+cd ~/rpi-server-iot
 chmod +x scripts/install-base-tools.sh
 ./scripts/install-base-tools.sh
 ```
@@ -154,6 +169,7 @@ source ~/.bashrc
 ## ตรวจสอบว่าเครื่องมือพร้อมจริง
 
 ```bash
+cd ~/rpi-server-iot
 chmod +x scripts/verify-system-tools.sh
 ./scripts/verify-system-tools.sh
 ```
@@ -162,7 +178,7 @@ chmod +x scripts/verify-system-tools.sh
 
 ## ไปขั้นตอนถัดไป
 
-หลังจากนี้ให้ไปต่อที่ [DEPLOYMENT.md](/c:/DEV/rpi_server_iot/docs/DEPLOYMENT.md)
+หลังจากนี้ให้ไปต่อที่ [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ---
 

@@ -5,24 +5,28 @@
 เริ่มระบบ
 
 ```bash
+cd ~/rpi-server-iot
 docker compose up -d
 ```
 
 หยุดระบบ
 
 ```bash
+cd ~/rpi-server-iot
 docker compose down
 ```
 
 เริ่มผ่าน script
 
 ```bash
+cd ~/rpi-server-iot
 ./scripts/start.sh
 ```
 
 หยุดผ่าน script
 
 ```bash
+cd ~/rpi-server-iot
 ./scripts/stop.sh
 ```
 
@@ -51,6 +55,7 @@ lsof -i -P -n
 ## การตรวจสอบสถานะ container
 
 ```bash
+cd ~/rpi-server-iot
 docker compose ps
 docker compose logs -f
 ```
@@ -58,6 +63,7 @@ docker compose logs -f
 ดู log แยกตาม service
 
 ```bash
+cd ~/rpi-server-iot
 docker compose logs -f mosquitto
 docker compose logs -f nodered
 docker compose logs -f influxdb
@@ -102,12 +108,14 @@ nvim compose.yaml
 ## การสารองข้อมูล
 
 ```bash
+cd ~/rpi-server-iot
 ./scripts/backup.sh
 ```
 
 ## การอัปเดต image
 
 ```bash
+cd ~/rpi-server-iot
 docker compose pull
 docker compose up -d
 ```
@@ -115,6 +123,7 @@ docker compose up -d
 ## การตรวจสอบว่าเครื่องมือพร้อมใช้งาน
 
 ```bash
+cd ~/rpi-server-iot
 ./scripts/verify-system-tools.sh
 ```
 

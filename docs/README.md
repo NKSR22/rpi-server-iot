@@ -4,16 +4,16 @@
 
 ## เส้นทางการอ่านที่แนะนา
 
-1. [INSTALL_RPI_OS_TERMINAL.md](/c:/DEV/rpi_server_iot/docs/INSTALL_RPI_OS_TERMINAL.md)
-2. [DEPLOYMENT.md](/c:/DEV/rpi_server_iot/docs/DEPLOYMENT.md)
-3. [OPERATIONS.md](/c:/DEV/rpi_server_iot/docs/OPERATIONS.md)
-4. [ARCHITECTURE.md](/c:/DEV/rpi_server_iot/docs/ARCHITECTURE.md)
-5. [THEORY_IOT_SYSTEM.md](/c:/DEV/rpi_server_iot/docs/THEORY_IOT_SYSTEM.md)
-6. [THEORY_MQTT.md](/c:/DEV/rpi_server_iot/docs/THEORY_MQTT.md)
-7. [THEORY_NODE_RED.md](/c:/DEV/rpi_server_iot/docs/THEORY_NODE_RED.md)
-8. [THEORY_INFLUXDB.md](/c:/DEV/rpi_server_iot/docs/THEORY_INFLUXDB.md)
-9. [THEORY_GRAFANA.md](/c:/DEV/rpi_server_iot/docs/THEORY_GRAFANA.md)
-10. [SECURITY_AND_BEST_PRACTICES.md](/c:/DEV/rpi_server_iot/docs/SECURITY_AND_BEST_PRACTICES.md)
+1. [INSTALL_RPI_OS_TERMINAL.md](INSTALL_RPI_OS_TERMINAL.md)
+2. [DEPLOYMENT.md](DEPLOYMENT.md)
+3. [OPERATIONS.md](OPERATIONS.md)
+4. [ARCHITECTURE.md](ARCHITECTURE.md)
+5. [THEORY_IOT_SYSTEM.md](THEORY_IOT_SYSTEM.md)
+6. [THEORY_MQTT.md](THEORY_MQTT.md)
+7. [THEORY_NODE_RED.md](THEORY_NODE_RED.md)
+8. [THEORY_INFLUXDB.md](THEORY_INFLUXDB.md)
+9. [THEORY_GRAFANA.md](THEORY_GRAFANA.md)
+10. [SECURITY_AND_BEST_PRACTICES.md](SECURITY_AND_BEST_PRACTICES.md)
 
 ## โครงสร้างความรู้
 

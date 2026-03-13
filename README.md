@@ -71,20 +71,13 @@ rpi-server-iot/
 
 ## คู่มือที่ควรอ่านตามลำดับ
 
-1. [docs/INSTALL_RPI_OS_TERMINAL.md](/c:/DEV/rpi_server_iot/docs/INSTALL_RPI_OS_TERMINAL.md)
-2. [docs/DEPLOYMENT.md](/c:/DEV/rpi_server_iot/docs/DEPLOYMENT.md)
-3. [docs/OPERATIONS.md](/c:/DEV/rpi_server_iot/docs/OPERATIONS.md)
-4. [docs/ARCHITECTURE.md](/c:/DEV/rpi_server_iot/docs/ARCHITECTURE.md)
-5. [docs/README.md](/c:/DEV/rpi_server_iot/docs/README.md)
+1. [docs/INSTALL_RPI_OS_TERMINAL.md](docs/INSTALL_RPI_OS_TERMINAL.md)
+2. [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
+3. [docs/OPERATIONS.md](docs/OPERATIONS.md)
+4. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+5. [docs/README.md](docs/README.md)
 
 ## วิธี clone โปรเจกต์จาก GitHub
-
-บน Raspberry Pi หรือเครื่อง Linux ปลายทาง ให้ใช้คาสั่งนี้
-
-```bash
-git clone https://github.com/NKSR22/rpi-server-iot.git
-cd rpi-server-iot
-```
 
 ถ้ายังไม่มี `git` ให้ติดตั้งก่อน
 
@@ -93,11 +86,21 @@ sudo apt update
 sudo apt install -y git
 ```
 
+บน Raspberry Pi หรือเครื่อง Linux ปลายทาง ให้ใช้คาสั่งนี้
+
+```bash
+git clone https://github.com/NKSR22/rpi-server-iot.git
+cd ~/rpi-server-iot
+```
+
 ## ขั้นตอนติดตั้งแบบย่อ
 
 ### 1. ติดตั้งเครื่องมือพื้นฐานให้ครบ
 
+รันคาสั่งต่อไปนี้จากโฟลเดอร์โปรเจกต์ `rpi-server-iot`
+
 ```bash
+cd ~/rpi-server-iot
 chmod +x scripts/install-base-tools.sh
 ./scripts/install-base-tools.sh
 ./scripts/verify-system-tools.sh
@@ -106,6 +109,7 @@ chmod +x scripts/install-base-tools.sh
 ### 2. ติดตั้ง Docker
 
 ```bash
+cd ~/rpi-server-iot
 chmod +x scripts/install-docker.sh
 ./scripts/install-docker.sh
 ```
@@ -120,6 +124,7 @@ nvim .env
 ### 4. เริ่มระบบ
 
 ```bash
+cd ~/rpi-server-iot
 chmod +x scripts/start.sh
 ./scripts/start.sh
 ```
