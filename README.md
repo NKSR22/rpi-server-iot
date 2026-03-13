@@ -53,6 +53,7 @@ rpi-server-iot/
 |  |- install-docker.sh
 |  |- enable-mqtt-auth.sh
 |  |- prepare-data-dirs.sh
+|  |- restore-backup.sh
 |  |- verify-system-tools.sh
 |  |- start.sh
 |  |- stop.sh
@@ -93,7 +94,8 @@ rpi-server-iot/
 4. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 5. [docs/LAN_VALIDATION.md](docs/LAN_VALIDATION.md)
 6. [docs/PRODUCTION_HARDENING.md](docs/PRODUCTION_HARDENING.md)
-7. [docs/README.md](docs/README.md)
+7. [docs/ESP32_EXAMPLES.md](docs/ESP32_EXAMPLES.md)
+8. [docs/README.md](docs/README.md)
 
 ## วิธี clone โปรเจกต์จาก GitHub
 
@@ -180,6 +182,8 @@ INFLUXDB_ADMIN_TOKEN=change-this-influxdb-token
 - InfluxDB: `http://IP-ADDRESS-OF-PI:8086`
 - Grafana: `http://IP-ADDRESS-OF-PI:3000`
 
+หลัง start ระบบครั้งแรก Grafana จะ provision data source ชื่อ `InfluxDB` และ dashboard ตัวอย่าง `IoT System Overview` ให้อัตโนมัติ
+
 ## หลักการอ้างอิง host ให้ถูกต้อง
 
 - จาก browser หรือ terminal บนเครื่องลูกข่ายในวง LAN ให้ใช้ `IP-ADDRESS-OF-PI`
@@ -198,6 +202,7 @@ INFLUXDB_ADMIN_TOKEN=change-this-influxdb-token
 - ถ้าใช้ RAM 4 GB ควรติดตามการใช้หน่วยความจำในช่วงแรกของการใช้งาน
 - ถ้าข้อมูล sensor ถูกเขียนถี่มาก ควรพิจารณา SSD แทน microSD
 - ควรสำรองข้อมูลในโฟลเดอร์ `docker/` และไฟล์ `.env` เป็นประจำ
+- ถ้าจะใช้ใน production ควรอ่าน `docs/PRODUCTION_HARDENING.md` และเปิด MQTT authentication
 
 ## Copyright
 

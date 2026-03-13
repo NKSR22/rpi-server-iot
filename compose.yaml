@@ -61,6 +61,9 @@ services:
       - TZ=${TZ}
       - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+      - INFLUXDB_ORG=${INFLUXDB_ORG}
+      - INFLUXDB_BUCKET=${INFLUXDB_BUCKET}
+      - INFLUXDB_ADMIN_TOKEN=${INFLUXDB_ADMIN_TOKEN}
     volumes:
       - ./docker/grafana/data:/var/lib/grafana
       - ./docker/grafana/provisioning:/etc/grafana/provisioning

@@ -210,7 +210,7 @@ http://192.168.1.50:3000
 
 ### ทดสอบเชื่อม InfluxDB เป็น data source
 
-ใน Grafana ให้เพิ่ม data source แบบ `InfluxDB`
+ใน Grafana ระบบจะ provision data source แบบ `InfluxDB` ให้อัตโนมัติ
 
 ค่าแนะนำ
 
@@ -243,6 +243,11 @@ from(bucket: "sensor-data")
 - panel แสดงข้อมูลที่เพิ่งเขียนจากขั้นตอน InfluxDB
 
 ถ้า Grafana เปิดจาก browser ได้ แต่ `Save & test` ไม่ผ่าน ให้ตรวจว่า URL data source ใช้ `http://influxdb:8086` ไม่ใช่ `http://localhost:8086`
+
+หมายเหตุ
+
+- ระบบมี dashboard ตัวอย่าง `IoT System Overview` ให้ตั้งแต่เริ่มต้น
+- ถ้ายังไม่เห็น dashboard ให้รอ provisioning สักครู่หรือ refresh หน้าเว็บ
 
 ## ตารางสรุปการทดสอบ
 

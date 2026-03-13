@@ -90,7 +90,7 @@ mosquitto_pub -h localhost -p 1883 -t test/topic -m "hello"
 
 - URL เริ่มต้นคือ `http://IP-ADDRESS-OF-PI:8086`
 - ค่า `org`, `bucket`, `username` และ `token` ดูได้จากไฟล์ `.env`
-- ใน Grafana ให้เพิ่ม data source ประเภท `InfluxDB`
+- ใน Grafana จะมี data source ประเภท `InfluxDB` ถูก provision ให้อัตโนมัติ
 - ใน Node-RED สามารถใช้ node ของ InfluxDB เพื่อเขียนข้อมูล sensor ลง bucket ได้
 - เมื่อ config จาก Grafana ให้ใช้ URL `http://influxdb:8086`
 - เมื่อ config จาก Node-RED ที่รันใน container เดียวกัน ให้หลีกเลี่ยง `localhost` ถ้าหมายถึง service อื่น
@@ -117,6 +117,16 @@ cd ~/rpi-server-iot
 ```
 
 สคริปต์นี้สำรอง `.env`, `compose.yaml`, Mosquitto config/data/log, Node-RED data, InfluxDB data/config และ Grafana data/provisioning ไปยังโฟลเดอร์ `backup-YYYYMMDD-HHMMSS`
+
+## การกู้คืนข้อมูล
+
+```bash
+cd ~/rpi-server-iot
+./scripts/restore-backup.sh backup-YYYYMMDD-HHMMSS
+docker compose up -d
+```
+
+สคริปต์จะสร้างโฟลเดอร์ `pre-restore-YYYYMMDD-HHMMSS` เพื่อเก็บสถานะก่อน restore ไว้ก่อนเสมอ
 
 ## การอัปเดต image
 

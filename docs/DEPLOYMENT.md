@@ -139,6 +139,8 @@ chmod +x scripts/start.sh
 docker compose up -d
 ```
 
+หลังเริ่มระบบครั้งแรก Grafana จะ provision data source `InfluxDB` และ dashboard ตัวอย่าง `IoT System Overview` ให้อัตโนมัติ
+
 ## ขั้นตอนที่ 9 ตรวจสอบสถานะ
 
 ```bash
@@ -202,6 +204,8 @@ mosquitto_pub -h "$PI_IP" -p 1883 -t lan/test/topic -m "hello-from-lan"
 - Grafana: `http://192.168.1.50:3000`
 - InfluxDB UI: `http://192.168.1.50:8086`
 
+เมื่อเข้า Grafana ครั้งแรก ควรตรวจว่ามี data source `InfluxDB` และ dashboard `IoT System Overview` อยู่แล้ว
+
 รายละเอียดการทดสอบแยกตาม service อยู่ใน [LAN_VALIDATION.md](LAN_VALIDATION.md)
 
 ## ขั้นตอนที่ 12 หยุดระบบ
@@ -226,6 +230,17 @@ cd ~/rpi-server-iot
 chmod +x scripts/backup.sh
 ./scripts/backup.sh
 ```
+
+## การกู้คืนข้อมูลจาก backup
+
+```bash
+cd ~/rpi-server-iot
+chmod +x scripts/restore-backup.sh
+./scripts/restore-backup.sh backup-YYYYMMDD-HHMMSS
+docker compose up -d
+```
+
+สคริปต์จะสำรองสถานะปัจจุบันเป็น `pre-restore-YYYYMMDD-HHMMSS` ก่อน restore ทุกครั้ง
 
 ## โฟลเดอร์สำคัญที่ต้องสำรอง
 

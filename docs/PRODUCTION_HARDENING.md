@@ -116,6 +116,14 @@ cd ~/rpi-server-iot
 - ทดสอบการกู้คืนจริงเป็นรอบ ๆ
 - ถ้าข้อมูลมีความสำคัญสูง ควรตั้ง cron job หรือ systemd timer
 
+การกู้คืนข้อมูล
+
+```bash
+cd ~/rpi-server-iot
+./scripts/restore-backup.sh backup-YYYYMMDD-HHMMSS
+docker compose up -d
+```
+
 ## 7. ตรวจสอบการใช้ storage และอายุของสื่อบันทึก
 
 InfluxDB และ Grafana จะสร้างข้อมูลสะสมต่อเนื่อง จึงควรตรวจอย่างสม่ำเสมอ
@@ -147,7 +155,7 @@ docker compose ps
 - MQTT publish/subscribe
 - หน้า Node-RED
 - InfluxDB health
-- Grafana login และ dashboard
+- Grafana login, data source `InfluxDB` และ dashboard
 
 ## 9. เช็กลิสต์ก่อนใช้งานจริง
 
