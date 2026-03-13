@@ -1,6 +1,6 @@
 ﻿# การดูแลและใช้งานระบบ
 
-## คาสั่งเริ่มและหยุดระบบ
+## คำสั่งเริ่มและหยุดระบบ
 
 เริ่มระบบ
 
@@ -84,7 +84,7 @@ publish
 mosquitto_pub -h localhost -p 1883 -t test/topic -m "hello"
 ```
 
-ถ้าทดสอบจากคอมพิวเตอร์อีกเครื่องในวง LAN ให้ใช้ IP ของ Raspberry Pi แทน `localhost` และดูขั้นตอนแบบละเอียดใน [LAN_VALIDATION.md](LAN_VALIDATION.md)
+ถ้าทดสอบจากคอมพิวเตอร์อีกเครื่องหนึ่งในวง LAN ให้ใช้ IP ของ Raspberry Pi แทน `localhost` และดูขั้นตอนแบบละเอียดใน [LAN_VALIDATION.md](LAN_VALIDATION.md)
 
 ## การใช้งาน InfluxDB เบื้องต้น
 
@@ -109,12 +109,14 @@ nvim .env
 nvim compose.yaml
 ```
 
-## การสารองข้อมูล
+## การสำรองข้อมูล
 
 ```bash
 cd ~/rpi-server-iot
 ./scripts/backup.sh
 ```
+
+สคริปต์นี้สำรอง `.env`, `compose.yaml`, Mosquitto config/data/log, Node-RED data, InfluxDB data/config และ Grafana data/provisioning ไปยังโฟลเดอร์ `backup-YYYYMMDD-HHMMSS`
 
 ## การอัปเดต image
 

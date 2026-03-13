@@ -1,6 +1,6 @@
 # การทดสอบระบบจากเครื่องลูกข่ายในวง LAN
 
-เอกสารนี้สาหรับทดสอบระบบเมื่อ Raspberry Pi เป็น server และเครื่องที่ใช้ browser หรือคาสั่งทดสอบเป็น "อีกเครื่องหนึ่ง" ที่อยู่ในวง LAN เดียวกัน
+เอกสารนี้สำหรับทดสอบระบบเมื่อ Raspberry Pi เป็น server และเครื่องที่ใช้ browser หรือคำสั่งทดสอบเป็น "อีกเครื่องหนึ่ง" ที่อยู่ในวง LAN เดียวกัน
 
 ## หลักการอ้างอิง host ให้ถูกต้อง
 
@@ -185,8 +185,8 @@ curl --request POST \
 
 ผลที่ควรได้
 
-- คาสั่ง write ไม่คืน error
-- คาสั่ง query เห็น measurement `manual_test`
+- คำสั่ง write ไม่คืน error
+- คำสั่ง query เห็น measurement `manual_test`
 
 ## การทดสอบ Grafana จากเครื่องลูกข่าย
 
@@ -212,7 +212,7 @@ http://192.168.1.50:3000
 
 ใน Grafana ให้เพิ่ม data source แบบ `InfluxDB`
 
-ค่าแนะนา
+ค่าแนะนำ
 
 - Query language: `Flux`
 - URL: `http://influxdb:8086`
@@ -249,7 +249,7 @@ from(bucket: "sensor-data")
 | Service | ทดสอบจากเครื่องลูกข่าย | ผลที่ควรได้ |
 | --- | --- | --- |
 | MQTT | `mosquitto_sub` และ `mosquitto_pub` ไปที่ `IP-ADDRESS-OF-PI:1883` | รับข้อความได้ |
-| Node-RED | เปิด `http://IP-ADDRESS-OF-PI:1880` และ deploy flow | หน้าเว็บโหลดและ flow ทางาน |
+| Node-RED | เปิด `http://IP-ADDRESS-OF-PI:1880` และ deploy flow | หน้าเว็บโหลดและ flow ทำงาน |
 | InfluxDB | เปิด `http://IP-ADDRESS-OF-PI:8086` และเรียก `/health` | health ผ่านและ query ได้ |
 | Grafana | เปิด `http://IP-ADDRESS-OF-PI:3000` และ `Save & test` data source | login ได้และ data source ใช้งานได้ |
 

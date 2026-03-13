@@ -3,15 +3,15 @@
 ## เครื่องเป้าหมาย
 
 - บอร์ด: Raspberry Pi 5
-- หน่วยความจา: 4 GB RAM หรือมากกว่า
-- ระบบปฏิบัติการที่แนะนา: Raspberry Pi OS Lite 64-bit
-- แนะนา Ethernet และ storage ที่เชื่อถือได้สาหรับงานต่อเนื่อง
+- หน่วยความจำ: 4 GB RAM หรือมากกว่า
+- ระบบปฏิบัติการที่แนะนำ: Raspberry Pi OS Lite 64-bit
+- แนะนำ Ethernet และ storage ที่เชื่อถือได้สำหรับงานต่อเนื่อง
 
 ## ภาพรวมการติดตั้ง
 
 1. ติดตั้ง Raspberry Pi OS แบบ terminal
 2. SSH เข้าเครื่อง
-3. อัปเดตระบบและ firmware ที่จาเป็น
+3. อัปเดตระบบและ firmware ที่จำเป็น
 4. ตรวจสอบ RAM, swap, disk และ network ให้พร้อม
 5. ติดตั้ง `git` ถ้ายังไม่มี
 6. clone โปรเจกต์จาก GitHub
@@ -70,7 +70,7 @@ cd ~/rpi-server-iot
 
 ## ขั้นตอนที่ 5 ติดตั้งเครื่องมือพื้นฐาน
 
-ให้รันคาสั่งต่อไปนี้จากโฟลเดอร์โปรเจกต์ `rpi-server-iot`
+ให้รันคำสั่งต่อไปนี้จากโฟลเดอร์โปรเจกต์ `rpi-server-iot`
 
 ```bash
 cd ~/rpi-server-iot
@@ -94,7 +94,7 @@ chmod +x scripts/install-docker.sh
 ./scripts/install-docker.sh
 ```
 
-หลังติดตั้งเสร็จ แนะนาให้ออกจากระบบแล้ว login ใหม่
+หลังติดตั้งเสร็จ แนะนำให้ออกจากระบบแล้ว login ใหม่
 
 ตรวจสอบเวอร์ชัน
 
@@ -110,7 +110,7 @@ cp .env.example .env
 nvim .env
 ```
 
-ค่าที่ควรตรวจสอบเพิ่มเติมสาหรับ InfluxDB
+ค่าที่ควรตรวจสอบเพิ่มเติมสำหรับ InfluxDB
 
 - `INFLUXDB_PORT=8086`
 - `INFLUXDB_USERNAME=admin`
@@ -119,10 +119,10 @@ nvim .env
 - `INFLUXDB_BUCKET=sensor-data`
 - `INFLUXDB_ADMIN_TOKEN=change-this-influxdb-token`
 
-ข้อแนะนา
+ข้อแนะนำ
 
 - เปลี่ยน password เริ่มต้นก่อนใช้งานจริง
-- token ของ InfluxDB ควรเปลี่ยนให้ยาวและคาดเดายาก
+- token ของ InfluxDB ควรเปลี่ยนให้ยาวและคาดเดาได้ยาก
 - ถ้าจะเปิดใช้จากหลายเครื่องในวง LAN ให้ตรวจสอบ firewall และ port ด้วย
 
 ## ขั้นตอนที่ 8 เริ่มระบบ
@@ -170,7 +170,7 @@ hostname -I
 - Grafana: `http://192.168.1.50:3000`
 - MQTT: `192.168.1.50:1883`
 
-การใช้งานจริงจากคอมพิวเตอร์อีกเครื่องในวง LAN ให้ใช้ IP นี้ ไม่ใช้ `localhost`
+การใช้งานจริงจากคอมพิวเตอร์อีกเครื่องหนึ่งในวง LAN ให้ใช้ IP นี้ ไม่ใช้ `localhost`
 
 ## ขั้นตอนที่ 11 ทดสอบระบบจากเครื่องลูกข่ายในวง LAN
 
@@ -219,7 +219,7 @@ cd ~/rpi-server-iot
 docker compose down
 ```
 
-## การสารองข้อมูล
+## การสำรองข้อมูล
 
 ```bash
 cd ~/rpi-server-iot
@@ -227,22 +227,32 @@ chmod +x scripts/backup.sh
 ./scripts/backup.sh
 ```
 
-## โฟลเดอร์สาคัญที่ต้องสารอง
+## โฟลเดอร์สำคัญที่ต้องสำรอง
 
+- `.env`
+- `compose.yaml`
+- `docker/mosquitto/config/`
 - `docker/mosquitto/data/`
 - `docker/mosquitto/log/`
 - `docker/nodered/data/`
 - `docker/influxdb/data/`
 - `docker/influxdb/config/`
+- `docker/grafana/provisioning/`
 - `docker/grafana/data/`
 
-## จุดที่ควรตรวจซ้าในงานจริง
+หมายเหตุ
+
+- โฟลเดอร์ข้างต้นถูกเก็บอยู่บน Raspberry Pi จริงผ่าน bind mount
+- การลบ container อย่างเดียวไม่ทำให้ข้อมูลหาย
+- แต่ถ้าลบโฟลเดอร์ใน repo, microSD เสีย, หรือ SSD เสีย ข้อมูลจะหาย จึงควรมี backup แยกออกจากเครื่อง
+
+## จุดที่ควรตรวจซ้ำในงานจริง
 
 - เวลาของระบบตรงกับ timezone จริงหรือไม่
 - Raspberry Pi มี IP คงที่หรือ DHCP reservation หรือไม่
 - password และ token ถูกเปลี่ยนจากค่าเริ่มต้นแล้วหรือยัง
-- backup ถูกทดสอบกู้คืนได้หรือยัง
-- storage มีพื้นที่พอสาหรับ InfluxDB ในระยะยาวหรือไม่
+- backup ถูกทดสอบกู้คืนได้แล้วหรือยัง
+- storage มีพื้นที่พอสำหรับ InfluxDB ในระยะยาวหรือไม่
 
 ---
 

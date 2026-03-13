@@ -2,7 +2,7 @@
 
 ## ภาพรวมระบบ
 
-ระบบนี้ออกแบบให้ Raspberry Pi 5 ทาหน้าที่เป็น Local IoT Server ภายในเครือข่ายเดียวกัน โดยใช้ Docker Compose เป็นตัวจัดการ service หลัก
+ระบบนี้ออกแบบให้ Raspberry Pi 5 ทำหน้าที่เป็น Local IoT Server ภายในเครือข่ายเดียวกัน โดยใช้ Docker Compose เป็นตัวจัดการ service หลัก
 
 ## Service หลักในระบบ
 
@@ -23,13 +23,13 @@
 - shell บน Raspberry Pi สามารถตรวจ service ผ่าน `localhost`
 - container ภายในระบบเดียวกันควรคุยกันผ่านชื่อ service ของ Docker Compose
 
-ตัวอย่างที่สาคัญ
+ตัวอย่างที่สำคัญ
 
 - Node-RED ต่อ MQTT broker ใช้ `mosquitto:1883`
 - Grafana ต่อ InfluxDB ใช้ `http://influxdb:8086`
 - เครื่องลูกข่ายเปิด Node-RED ใช้ `http://192.168.1.50:1880`
 
-## อธิบายการทางาน
+## อธิบายการทำงาน
 
 1. อุปกรณ์ IoT ส่งข้อมูลเข้ามายัง MQTT topic
 2. Node-RED subscribe ข้อมูลจาก topic ที่เกี่ยวข้อง
@@ -39,14 +39,19 @@
 
 ## โครงสร้างการเก็บข้อมูลถาวร
 
+- โฟลเดอร์เหล่านี้เป็น bind mount จาก filesystem ของ Raspberry Pi ไม่ใช่ข้อมูลชั่วคราวใน container
 - `docker/mosquitto/data/` เก็บข้อมูล persistence ของ MQTT broker
 - `docker/mosquitto/log/` เก็บ log ของ Mosquitto
 - `docker/nodered/data/` เก็บ flow และ config ของ Node-RED
 - `docker/influxdb/data/` เก็บข้อมูลของ InfluxDB
 - `docker/influxdb/config/` เก็บ config ของ InfluxDB
 - `docker/grafana/data/` เก็บข้อมูลภายในของ Grafana
+- `docker/grafana/provisioning/` เก็บไฟล์ provision ของ Grafana
+- `.env` เก็บค่าตั้งค่าหลักของระบบ
 
-## ข้อแนะนาในการขยายระบบ
+ตราบใดที่โฟลเดอร์และไฟล์เหล่านี้ยังอยู่บน Raspberry Pi ข้อมูลจะไม่หายเพียงเพราะ restart container หรือ `docker compose down`
+
+## ข้อแนะนำในการขยายระบบ
 
 - หากต้องการใช้งานใน production ควรเพิ่ม MQTT authentication และระบบ reverse proxy
 - หากต้องการแยกภาระงานในอนาคต สามารถย้าย InfluxDB หรือ Grafana ไปอีกเครื่องได้
